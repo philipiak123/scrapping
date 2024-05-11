@@ -1,29 +1,11 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const mysql = require('mysql');
 
 const app = express();
 
-// Konfiguracja połączenia z bazą danych MySQL
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'testowa'
-});
-
-// Połączenie z bazą danych
-connection.connect(err => {
-    if (err) {
-        console.error('Błąd połączenia z bazą danych:', err);
-        return;
-    }
-    console.log('Połączono z bazą danych MySQL');
-});
-
-// Funkcja do pobierania i zapisywania danych do bazy co 10 sekund
-const fetchDataAndSaveToDatabase = async () => {
+// Funkcja do pobierania danych co 10 sekund
+const fetchData = async () => {
     try {
         const url = 'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/cala-polska';
         const headers = {
@@ -37,23 +19,13 @@ const fetchDataAndSaveToDatabase = async () => {
         const elementContent = $('.e1fw9pn54.css-g23rbo').text();
 
         console.log('Pobrana zawartość:', elementContent);
-
-        // Zapisz dane do bazy danych
-        const query = `INSERT INTO test (nazwa) VALUES ('${elementContent}')`;
-        connection.query(query, (error, results, fields) => {
-            if (error) {
-                console.error('Błąd zapisu do bazy danych:', error);
-                return;
-            }
-            console.log('Dane zostały zapisane do bazy danych');
-        });
     } catch (error) {
         console.error('Błąd podczas pobierania strony:', error);
     }
 };
 
 // Wywołaj funkcję co 10 sekund
-setInterval(fetchDataAndSaveToDatabase, 10000);
+setInterval(fetchData, 10000);
 
 // Endpoint do obsługi żądań na adresie "/"
 app.get('/', (req, res) => {

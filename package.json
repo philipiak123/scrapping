@@ -1,16 +1,21 @@
 {
-  "name": "htdocs",
+  "name": "test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philipiak123/scrap.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/philipiak123/scrap/issues"
+  },
+  "homepage": "https://github.com/philipiak123/scrap#readme",
   "dependencies": {
     "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
